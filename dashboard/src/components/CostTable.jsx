@@ -1,4 +1,15 @@
 import { useState } from 'react'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+  Typography,
+} from '@mui/material'
 
 const services = [
   { name: 'ChatGPT Plus (Agent Mode)', price: 20 },
@@ -27,38 +38,40 @@ function CostTable() {
   )
 
   return (
-    <div>
-      <table className="cost-table">
-        <thead>
-          <tr>
-            <th>Service</th>
-            <th>Price (€)</th>
-            <th>Subscribed</th>
-          </tr>
-        </thead>
-        <tbody>
+    <TableContainer component={Paper}>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Service</TableCell>
+            <TableCell>Price (€)</TableCell>
+            <TableCell align="center">Subscribed</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {services.map((svc, idx) => (
-            <tr key={svc.name}>
-              <td>{svc.name}</td>
-              <td>{svc.price}</td>
-              <td style={{ textAlign: 'center' }}>
-                <input
-                  type="checkbox"
+            <TableRow key={svc.name}>
+              <TableCell>{svc.name}</TableCell>
+              <TableCell>{svc.price}</TableCell>
+              <TableCell align="center">
+                <Checkbox
                   checked={selected[idx]}
                   onChange={() => toggle(idx)}
                   disabled={svc.disabled}
+                  size="small"
                 />
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-      <p className="total">Total monthly cost: €{total.toFixed(2)}</p>
-      <p style={{ fontSize: '0.8em' }}>
+        </TableBody>
+      </Table>
+      <Typography variant="subtitle1" align="right" sx={{ m: 2 }}>
+        Total monthly cost: €{total.toFixed(2)}
+      </Typography>
+      <Typography variant="caption" sx={{ ml: 2, display: 'block' }}>
         <sup>*</sup> Meta AI features for WhatsApp are currently free where
         available.
-      </p>
-    </div>
+      </Typography>
+    </TableContainer>
   )
 }
 
