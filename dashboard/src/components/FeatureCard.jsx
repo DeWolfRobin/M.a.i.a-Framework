@@ -1,14 +1,44 @@
 import PropTypes from 'prop-types'
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Typography,
+} from '@mui/material'
 
 function FeatureCard({ title, description, actions }) {
   return (
-    <div className="card">
-      <h2>{title}</h2>
-      <p>{description}</p>
-      {actions.map(({ label, onClick }, idx) => (
-        <button key={idx} onClick={onClick}>{label}</button>
-      ))}
-    </div>
+    <Card
+      variant="outlined"
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}
+    >
+      <CardContent>
+        <Typography variant="h6" component="h2" gutterBottom>
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {description}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ mt: 'auto', flexWrap: 'wrap', gap: 1 }}>
+        {actions.map(({ label, onClick }, idx) => (
+          <Button
+            key={idx}
+            size="small"
+            variant="contained"
+            onClick={onClick}
+          >
+            {label}
+          </Button>
+        ))}
+      </CardActions>
+    </Card>
   )
 }
 
