@@ -16,6 +16,13 @@ function FeatureCard({ title, description, actions }) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+        borderRadius: 2,
+        boxShadow: 1,
+        transition: 'transform 0.2s, box-shadow 0.2s',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: 3,
+        },
       }}
     >
       <CardContent>
@@ -26,13 +33,21 @@ function FeatureCard({ title, description, actions }) {
           {description}
         </Typography>
       </CardContent>
-      <CardActions sx={{ mt: 'auto', flexWrap: 'wrap', gap: 1 }}>
+      <CardActions
+        sx={{
+          mt: 'auto',
+          flexWrap: 'wrap',
+          gap: 1,
+          flexDirection: { xs: 'column', sm: 'row' },
+        }}
+      >
         {actions.map(({ label, onClick }, idx) => (
           <Button
             key={idx}
             size="small"
             variant="contained"
             onClick={onClick}
+            sx={{ width: { xs: '100%', sm: 'auto' } }}
           >
             {label}
           </Button>

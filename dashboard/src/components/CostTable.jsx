@@ -6,17 +6,47 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TableFooter,
   Paper,
   Checkbox,
   Typography,
 } from '@mui/material'
 
 const services = [
-  { name: 'ChatGPT Plus (Agent Mode)', price: 20 },
-  { name: 'SaneBox or Compose AI', price: 10 },
-  { name: 'Call Assistant AI', price: 7 },
-  { name: 'Goodcall / Rosie / Allô', price: 50 },
-  { name: 'Meta AI (WhatsApp)', price: 0, defaultChecked: true, disabled: true },
+  {
+    name: 'ChatGPT Plus (Agent Mode)',
+    price: 20,
+    usedFor: [
+      'Email Assistant',
+      'Messaging',
+      'Groceries & To‑Do',
+      'Calendar & Scheduling',
+      'Cost Monitoring',
+      'Daily Briefing',
+    ],
+  },
+  {
+    name: 'SaneBox or Compose AI',
+    price: 10,
+    usedFor: ['Email Assistant'],
+  },
+  {
+    name: 'Call Assistant AI',
+    price: 7,
+    usedFor: ['Call Screening & Appointments'],
+  },
+  {
+    name: 'Goodcall / Rosie / Allô',
+    price: 50,
+    usedFor: ['Call Screening & Appointments'],
+  },
+  {
+    name: 'Meta AI (WhatsApp)',
+    price: 0,
+    defaultChecked: true,
+    disabled: true,
+    usedFor: ['Messaging'],
+  },
 ]
 
 function CostTable() {
@@ -44,6 +74,7 @@ function CostTable() {
           <TableRow>
             <TableCell>Service</TableCell>
             <TableCell>Price (€)</TableCell>
+            <TableCell>Used For</TableCell>
             <TableCell align="center">Subscribed</TableCell>
           </TableRow>
         </TableHead>
@@ -51,7 +82,13 @@ function CostTable() {
           {services.map((svc, idx) => (
             <TableRow key={svc.name}>
               <TableCell>{svc.name}</TableCell>
-              <TableCell>{svc.price}</TableCell>
+              <TableCell>
+                {svc.price.toLocaleString('en-IE', {
+                  style: 'currency',
+                  currency: 'EUR',
+                })}
+              </TableCell>
+              <TableCell>{svc.usedFor.join(', ')}</TableCell>
               <TableCell align="center">
                 <Checkbox
                   checked={selected[idx]}
@@ -63,11 +100,21 @@ function CostTable() {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3} align="right">
+              Total monthly cost:
+            </TableCell>
+            <TableCell align="center">
+              {total.toLocaleString('en-IE', {
+                style: 'currency',
+                currency: 'EUR',
+              })}
+            </TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
-      <Typography variant="subtitle1" align="right" sx={{ m: 2 }}>
-        Total monthly cost: €{total.toFixed(2)}
-      </Typography>
-      <Typography variant="caption" sx={{ ml: 2, display: 'block' }}>
+      <Typography variant="caption" sx={{ ml: 2, mt: 1, display: 'block' }}>
         <sup>*</sup> Meta AI features for WhatsApp are currently free where
         available.
       </Typography>
